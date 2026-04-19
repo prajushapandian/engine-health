@@ -2,6 +2,8 @@ import { useState, useCallback } from "react";
 import InputPanel from "@/components/InputPanel";
 import RULGauge from "@/components/RULGauge";
 import SensorChart from "@/components/SensorChart";
+import SensorHeatmap from "@/components/SensorHeatmap";
+import DegradationChart from "@/components/DegradationChart";
 import SensorSelector from "@/components/SensorSelector";
 import FleetOverview from "@/components/FleetOverview";
 import MetricCard from "@/components/MetricCard";
@@ -147,6 +149,25 @@ const Index = () => {
                     <div className="mt-4">
                       <SensorChart data={engine.readings} selectedSensors={selectedSensors} />
                     </div>
+                  </div>
+                </div>
+
+                {/* Degradation + Heatmap */}
+                <div className="grid gap-6 lg:grid-cols-2">
+                  <div className="rounded-lg border border-border bg-card p-5">
+                    <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      Degradation Trajectory
+                    </h3>
+                    {prediction && (
+                      <DegradationChart readings={engine.readings} rul={prediction.rul} />
+                    )}
+                  </div>
+
+                  <div className="rounded-lg border border-border bg-card p-5">
+                    <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      Sensor Correlation Heatmap
+                    </h3>
+                    <SensorHeatmap data={engine.readings} />
                   </div>
                 </div>
               </>
